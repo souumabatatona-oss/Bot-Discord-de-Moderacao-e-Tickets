@@ -1,0 +1,205 @@
+# ATUALIZAÇÃO OBRIGATÓRIA DO BOT DISCORD — CORREÇÕES E NOVAS FUNCIONALIDADES
+
+Quero que você trabalhe no projeto atual do meu bot Discord. Não crie outro projeto separado e não substitua funcionalidades que já estão funcionando. Analise os arquivos existentes, identifique os problemas e implemente as alterações abaixo de verdade.
+
+## 1. CORRIGIR O COMANDO /ENVIARDM
+
+Atualmente, o comando `/enviardm` só consegue enviar mensagem para uma pessoa. Quero corrigir isso.
+
+O comando deve permitir selecionar os seguintes destinos:
+
+**A) Todos os membros do servidor atual**
+- Obter os membros disponíveis do servidor usando os recursos oficiais do Discord.
+- Permitir enviar a mensagem individualmente por DM a todos os destinatários elegíveis.
+- Oferecer a opção de selecionar um cargo específico.
+- Permitir excluir determinados cargos da campanha.
+- Mostrar a quantidade estimada de destinatários antes de começar.
+- Exibir uma prévia da mensagem e solicitar confirmação.
+- Exibir o progresso da campanha em tempo real.
+- Apresentar o total de mensagens enviadas, falhas e destinatários ignorados.
+- Permitir cancelar uma campanha em andamento.
+
+**B) Outro servidor por ID**
+- Adicionar um campo para informar o ID do servidor de destino.
+- Permitir selecionar uma comunidade que o administrador controla e na qual o bot está instalado e autorizado a operar.
+- Verificar se o bot realmente está presente no servidor informado.
+- Obter os membros que a API oficial disponibilizar, respeitando os intents e as permissões necessários.
+- Permitir selecionar todos os membros elegíveis ou filtrar por cargo.
+- Exibir uma prévia e solicitar confirmação antes do envio.
+
+O ID do servidor não deve ser tratado como autorização automática para acessar ou contatar membros de uma comunidade alheia. Se o bot não estiver presente ou não tiver acesso autorizado aos membros, deve explicar o motivo e não fingir que executou a campanha.
+
+**C) Personalização da mensagem**
+
+Permitir:
+- Mensagem em texto simples ou embed profissional.
+- Título e descrição.
+- Cor da embed.
+- Imagem ou banner.
+- Rodapé.
+- Pré-visualização.
+- Confirmação e cancelamento.
+- Estatísticas de entrega.
+- Histórico das campanhas.
+
+**D) Corrigir o processamento em massa**
+
+Não executar o envio para apenas um destinatário. Implemente um sistema de fila que processe a lista inteira de destinatários, com controle de concorrência, tratamento de erros e respeito aos limites oficiais do Discord.
+
+Se um membro não aceitar mensagens diretas, registrar a falha e continuar com os próximos destinatários. Não repetir indefinidamente envios que falharam.
+
+Implemente controles contra abuso, permissões administrativas específicas, limites configuráveis e respeito às configurações de privacidade. Não tente contornar rate limits, bloqueios ou restrições da plataforma.
+
+## 2. CRIAR O COMANDO /HELP
+
+Implemente o comando slash `/help`.
+
+Ao executá-lo, o bot deverá enviar uma embed profissional contendo os comandos disponíveis e suas descrições.
+
+Organize a lista por categorias:
+
+- 🛡️ Segurança.
+- 🔨 Moderação.
+- 🎫 Tickets.
+- 📋 Logs.
+- 💬 Mensagens.
+- ⚙️ Administração.
+- ℹ️ Informações e utilidades.
+
+A lista deverá incluir todos os comandos realmente registrados no bot, incluindo os subcomandos existentes.
+
+Para cada comando, mostrar:
+- Nome.
+- Descrição curta e objetiva.
+- Parâmetros necessários.
+- Permissão necessária, quando aplicável.
+- Exemplo de uso, quando útil.
+
+**Não invente comandos que não existem.** Gere a lista dinamicamente a partir do registro real dos comandos, para evitar que o `/help` fique desatualizado quando novas funcionalidades forem adicionadas.
+
+Para não ultrapassar os limites de tamanho das embeds do Discord, utilize páginas com botões:
+
+- ◀️ Anterior.
+- ▶️ Próxima.
+- 🏠 Início.
+- ❌ Fechar.
+
+Os botões deverão funcionar de verdade. Apenas quem solicitou o painel poderá controlar a navegação, salvo se a configuração permitir compartilhamento.
+
+Utilize respostas efêmeras quando apropriado e verifique se todos os comandos foram registrados corretamente.
+
+## 3. PERSONALIZAR COMPLETAMENTE A MENSAGEM DE TICKET
+
+Atualize o comando `/ticketpainel` para permitir personalizar a mensagem que aparece no painel de abertura e a mensagem enviada dentro de cada ticket.
+
+Crie duas configurações separadas:
+
+### A) Mensagem do painel público
+
+Permitir configurar:
+- Título.
+- Descrição.
+- Cor.
+- Banner ou imagem.
+- Rodapé.
+- Texto dos botões.
+- Emojis dos botões.
+- Nome e descrição das categorias.
+- Texto introdutório.
+- Mensagem de instrução.
+- Aparência geral da embed.
+
+### B) Mensagem inicial dentro do ticket
+
+Permitir configurar:
+- Título.
+- Texto de boas-vindas.
+- Descrição e instruções.
+- Cor da embed.
+- Banner ou imagem.
+- Rodapé.
+- Texto de encerramento.
+- Menção opcional ao autor do ticket.
+- Menção opcional aos cargos de atendimento autorizados.
+- Informações do ticket, como categoria, autor, número e horário de abertura.
+
+As mensagens devem ser salvas no banco de dados e permanecer configuradas após reinicializações.
+
+### C) Selecionar as três categorias juntas
+
+Quero que o painel permita apresentar as três categorias simultaneamente:
+
+1. 🎧 SUPORTE.
+2. 🔄 REVOGAÇÃO.
+3. 🚨 DENÚNCIAS.
+
+O membro deverá conseguir visualizar e escolher qualquer uma delas no mesmo painel, sem precisar publicar um painel diferente para cada categoria.
+
+Implemente uma interface apropriada do Discord, utilizando botões ou um menu de seleção, respeitando os limites da plataforma.
+
+Cada categoria deverá manter sua própria descrição, suas permissões e suas configurações. A seleção de uma categoria deverá abrir o ticket correspondente.
+
+Permita também personalizar os emojis, os textos e as descrições das três opções.
+
+## 4. PUBLICAR TODOS OS ARQUIVOS JAVASCRIPT NO GITHUB
+
+Quero que todos os arquivos de código JavaScript do projeto sejam enviados para o meu GitHub.
+
+Utilize a integração oficial do GitHub disponível no Replit ou a API oficial do GitHub, caso seja necessário.
+
+Antes de publicar:
+- Identifique todos os arquivos-fonte JavaScript e arquivos necessários para executar o projeto.
+- Inclua os módulos, comandos, eventos, serviços, configurações não secretas e testes.
+- Inclua o `package.json` e o README.
+- Inclua um `.gitignore` apropriado.
+- Inclua um `.env.example` sem credenciais reais.
+- Preserve a estrutura de pastas do projeto.
+
+**Nunca publique:**
+- O token do bot.
+- O arquivo `.env` real.
+- Senhas ou chaves privadas.
+- Tokens de acesso do GitHub.
+- Credenciais de banco de dados.
+- Dados pessoais ou registros privados dos usuários.
+
+### Configuração do repositório
+
+Se o repositório ainda não existir, peça os dados necessários para criá-lo ou conecte-se à minha conta GitHub por um fluxo oficial de autorização.
+
+Quero poder definir:
+- Nome do repositório.
+- Descrição.
+- Visibilidade pública ou privada.
+- Branch principal.
+
+Prefiro um repositório privado para proteger o código durante o desenvolvimento.
+
+Se já existir um repositório, verifique-o antes de alterar arquivos para evitar sobrescrever conteúdo importante.
+
+### Sincronização
+
+Configure um fluxo confiável para publicar as alterações futuras no GitHub, quando essa integração estiver disponível.
+
+Utilize commits com mensagens descritivas. Não informe que os arquivos foram enviados sem confirmar que o GitHub aceitou a operação.
+
+Se a integração não estiver configurada, explique o que preciso autorizar ou conectar. Não invente URLs, repositórios ou resultados de publicação.
+
+## 5. REQUISITOS DE CONCLUSÃO
+
+Antes de finalizar:
+
+1. Teste o `/enviardm` com múltiplos destinatários em um ambiente controlado.
+2. Confirme que o processamento continua após uma DM falhar.
+3. Teste o cancelamento de uma campanha.
+4. Teste o `/help` e confirme que todos os comandos reais aparecem.
+5. Teste a navegação entre as páginas do `/help`.
+6. Teste a personalização do painel de tickets.
+7. Teste a mensagem inicial personalizada.
+8. Confirme que as três categorias aparecem juntas e abrem tickets corretamente.
+9. Verifique se as configurações persistem após reiniciar o bot.
+10. Execute testes de segurança para impedir acessos administrativos não autorizados.
+11. Verifique se nenhum segredo será publicado no GitHub.
+12. Confirme o resultado real da sincronização do repositório.
+
+Faça as alterações diretamente nos arquivos do projeto existente. Não entregue apenas instruções ou trechos de código: implemente, integre e teste as funcionalidades dentro das limitações reais do Discord, do Replit e do GitHub.
