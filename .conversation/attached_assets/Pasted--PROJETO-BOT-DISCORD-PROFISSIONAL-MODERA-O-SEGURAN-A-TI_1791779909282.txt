@@ -1,0 +1,492 @@
+# PROJETO: BOT DISCORD PROFISSIONAL — MODERAÇÃO, SEGURANÇA, TICKETS E LOGS
+
+Desenvolva um bot completo para Discord utilizando **JavaScript, Node.js e discord.js v14 ou superior**, com arquitetura profissional, interface organizada, alta segurança, persistência de dados e comandos slash (`/`).
+
+**IMPORTANTE:** Não quero apenas um exemplo, protótipo ou demonstração visual. Quero um projeto funcional, com os comandos implementados, botões operacionais, eventos configurados, banco de dados persistente e tratamento de erros. Não crie botões decorativos nem comandos que apenas respondam que a funcionalidade será implementada.
+
+Antes de finalizar, teste os fluxos principais e corrija os erros encontrados.
+
+## 1. ARQUITETURA E ORGANIZAÇÃO
+
+Crie uma estrutura modular e organizada, separando:
+
+- Comandos slash.
+- Eventos do Discord.
+- Sistemas de segurança.
+- Sistema de tickets.
+- Sistema de moderação.
+- Sistema de logs.
+- Sistema de mensagens e embeds.
+- Banco de dados.
+- Configurações específicas de cada servidor.
+- Validação de permissões.
+- Tratamento global de erros.
+
+Utilize `discord.js`, variáveis de ambiente e um banco de dados persistente, como PostgreSQL ou SQLite, de acordo com o ambiente disponível.
+
+O bot deverá:
+- Funcionar continuamente enquanto o processo estiver ativo.
+- Restaurar configurações e tickets após reinicializações.
+- Registrar erros sem derrubar o processo inteiro.
+- Implementar limites de uso para evitar abuso de comandos.
+- Validar permissões e hierarquia de cargos antes de executar ações.
+- Utilizar respostas efêmeras para configurações e informações privadas.
+- Nunca expor tokens, credenciais ou dados sensíveis.
+- Incluir um arquivo `.env.example` e um README com instruções completas de instalação, configuração e execução.
+
+## 2. SISTEMA ANTI-RAID 24H
+
+Crie o comando `/antiraid` com estas opções:
+
+- `ativar`: habilita a proteção.
+- `desativar`: desabilita a proteção.
+- `status`: mostra o estado atual.
+- `configurar`: permite ajustar os parâmetros.
+
+O sistema deve funcionar 24 horas por dia enquanto o bot estiver online, sem precisar ser ativado novamente a cada período.
+
+Funcionalidades:
+- Detectar entradas anormais de membros em intervalos curtos.
+- Configurar limites de entradas por período.
+- Ativar modo de proteção automaticamente ao detectar comportamento suspeito.
+- Alertar a equipe de moderação.
+- Aplicar medidas graduais, como restringir temporariamente o envio de mensagens ou colocar novas entradas em verificação, quando possível.
+- Identificar contas recém-criadas como um sinal de risco, sem banir automaticamente apenas pela idade da conta.
+- Registrar todas as detecções e medidas tomadas.
+- Permitir desativação emergencial por administradores autorizados.
+- Evitar punições automáticas indiscriminadas a membros legítimos.
+
+Implemente o monitoramento utilizando eventos do Discord e janelas de tempo configuráveis.
+
+## 3. SISTEMA ANTI-SPAM 24H
+
+Crie o comando `/antispam`, com opções para ativar, desativar, consultar status e configurar limites.
+
+Detectar:
+- Envio repetitivo de mensagens.
+- Excesso de mensagens em poucos segundos.
+- Repetição de textos ou links.
+- Spam de menções.
+- Excesso de mensagens com convites.
+- Tentativas de inundar canais com conteúdo repetitivo.
+
+Ações configuráveis:
+- Excluir mensagens identificadas como spam.
+- Emitir advertência.
+- Aplicar timeout temporário.
+- Notificar a moderação.
+- Registrar o incidente nos logs.
+
+Configure exceções por canal e cargo, sem permitir que elas desativem silenciosamente toda a proteção. Cargos isentos deverão ser definidos apenas por administradores autorizados.
+
+## 4. SISTEMA ANTI-INVITE 24H
+
+Crie o comando `/antiinvite`, com ativação, desativação, status e configurações.
+
+Funcionalidades:
+- Detectar convites do Discord em mensagens.
+- Excluir convites não autorizados.
+- Advertir o autor.
+- Aplicar timeout após reincidência, conforme configuração.
+- Permitir uma lista de convites e servidores autorizados.
+- Configurar exceções específicas para canais e cargos.
+- Registrar a mensagem removida, o autor, o canal e a medida aplicada.
+
+A proteção deverá funcionar automaticamente durante todo o tempo em que o bot estiver online.
+
+## 5. SISTEMA COMPLETO DE TICKETS
+
+Crie um painel profissional de abertura de tickets, com embed personalizável, botões com emojis próprios e três categorias obrigatórias.
+
+### Categorias
+
+**🎧 SUPORTE**
+
+Descrição: Utilize esta categoria para tirar dúvidas, solicitar ajuda, comunicar problemas técnicos ou receber assistência da equipe responsável pelo servidor.
+
+**🔄 REVOGAÇÃO**
+
+Descrição: Utilize esta categoria para solicitar uma revogação, contestar uma decisão administrativa ou pedir a revisão de uma punição ou restrição aplicada.
+
+**🚨 DENÚNCIAS**
+
+Descrição: Utilize esta categoria para denunciar membros, comportamentos inadequados, infrações às regras ou apresentar provas de uma ocorrência.
+
+Cada categoria deverá possuir:
+- Nome.
+- Descrição.
+- Emoji.
+- Categoria de canais do Discord onde os tickets serão criados.
+- Cargos autorizados a visualizar e atender.
+- Mensagem inicial personalizada.
+- Opções específicas de atendimento.
+
+### Painel administrativo de tickets
+
+Crie o comando `/ticketpainel` para configurar e publicar o painel.
+
+O painel deverá permitir:
+- Selecionar o canal onde será publicado.
+- Definir título, descrição, cor e rodapé da embed.
+- Enviar uma imagem para ser usada como banner da embed.
+- Configurar as três categorias e suas descrições.
+- Selecionar múltiplos cargos de moderadores autorizados.
+- Definir o cargo Staff utilizado na função de marcação.
+- Configurar a categoria de canais onde os tickets serão criados.
+- Definir o formato dos nomes dos tickets.
+- Configurar mensagens de abertura e encerramento.
+- Definir limites de tickets simultâneos por usuário.
+- Ativar ou desativar categorias individualmente.
+
+A imagem de banner deverá aparecer dentro da embed, utilizando a propriedade de imagem apropriada do Discord. Armazene apenas URLs válidas e acessíveis ou utilize anexos compatíveis com o Discord.
+
+Somente administradores autorizados poderão alterar o painel.
+
+### Abertura do ticket
+
+Quando um membro selecionar uma categoria, o bot deverá:
+
+1. Criar um canal privado para o atendimento.
+2. Permitir a visualização pelo autor, pelo bot e pelos cargos de atendimento configurados.
+3. Impedir que outros membros comuns visualizem o ticket.
+4. Enviar uma embed contendo a categoria, o autor, o horário de abertura e as instruções.
+5. Adicionar os botões de atendimento.
+6. Registrar a abertura nos logs.
+7. Impedir a criação de tickets duplicados, respeitando os limites configurados.
+
+### Botões obrigatórios dentro do ticket
+
+**🟢 ASSUMIR TICKET**
+
+- Apenas atendentes autorizados poderão assumir.
+- O primeiro atendente que clicar ficará registrado como responsável.
+- O bot deverá atualizar a embed indicando quem assumiu.
+- Apenas o responsável poderá fechar o ticket normalmente.
+- Administradores autorizados poderão intervir em situações excepcionais.
+- Deve existir uma opção de transferência de responsabilidade para outro atendente autorizado.
+
+**✏️ RENOMEAR TICKET**
+
+- Apenas atendentes autorizados poderão utilizar.
+- Abrir um modal solicitando o novo nome.
+- Validar o nome e impedir caracteres ou formatos inválidos.
+- Registrar o nome anterior, o novo nome e o responsável pela alteração.
+
+**🔔 MARCAR STAFF**
+
+- Mencionar o cargo Staff previamente configurado no painel.
+- Disponível somente para atendentes autorizados.
+- Aplicar cooldown para evitar notificações repetitivas.
+- Registrar quem acionou a equipe.
+
+**🔒 FECHAR TICKET**
+
+- O responsável pelo ticket poderá fechá-lo.
+- O autor poderá solicitar o encerramento, se essa opção estiver habilitada.
+- Outros atendentes poderão encerrar somente conforme as permissões definidas.
+- Solicitar confirmação antes de fechar.
+- Registrar motivo, responsável e horário.
+- Gerar uma transcrição em texto ou HTML seguro.
+- Enviar a transcrição ao canal de logs e, opcionalmente, ao autor.
+- Excluir ou arquivar o canal conforme configuração.
+
+**📩 MANDAR DM**
+
+- Disponível apenas para atendentes autorizados.
+- Abrir um modal para escrever uma mensagem personalizada.
+- Enviar a mensagem por DM ao autor do ticket.
+- Tratar o caso em que o membro bloqueou mensagens diretas.
+- Informar ao atendente se o envio falhou.
+- Registrar o resultado do envio, sem armazenar conteúdo sensível desnecessariamente.
+
+### Funcionalidades extras dos tickets
+
+Implemente também:
+
+- 📌 Adicionar observação interna.
+- 👥 Adicionar membro autorizado ao ticket.
+- 🚫 Remover membro do ticket.
+- 🔄 Transferir ticket para outro atendente.
+- 📝 Alterar prioridade.
+- ⏳ Indicar ticket pendente.
+- 📊 Consultar estatísticas de atendimento.
+- 🧾 Consultar histórico do ticket.
+- ⭐ Avaliar atendimento após o encerramento.
+- 🔁 Reabrir ticket dentro de um prazo configurável.
+- 🗂️ Arquivar tickets fechados.
+- 🔔 Notificar atendentes sobre tickets sem resposta durante um período configurado.
+
+As ações de gerenciamento deverão respeitar as permissões definidas para cada cargo.
+
+## 6. SISTEMA COMPLETO DE MODERAÇÃO
+
+Implemente comandos slash funcionais, com validação de permissões, hierarquia, justificativa, confirmação quando necessária e logs.
+
+### Punições
+
+- `/ban` — banir um membro.
+- `/unban` — remover banimento por ID.
+- `/kick` — expulsar um membro.
+- `/timeout` — aplicar timeout.
+- `/untimeout` — remover timeout.
+- `/mute` — criar um comando de compatibilidade para aplicar timeout.
+- `/warn` — advertir um membro.
+- `/warnings` — consultar advertências.
+- `/clearwarns` — limpar advertências com permissão administrativa.
+- `/softban` — banir e desbanir para remover mensagens, se permitido.
+- `/tempban` — aplicar banimento temporário com expiração persistente.
+- `/tempmute` — aplicar timeout temporário.
+- `/purge` — excluir mensagens em quantidade limitada.
+- `/slowmode` — configurar o intervalo entre mensagens.
+- `/lock` — bloquear envio de mensagens em um canal.
+- `/unlock` — desbloquear canal.
+- `/lockdown` — ativar bloqueio emergencial dos canais configurados.
+- `/unlockdown` — encerrar o bloqueio emergencial.
+- `/nick` — alterar apelido.
+- `/role add` — adicionar cargo.
+- `/role remove` — remover cargo.
+- `/role info` — consultar informações de um cargo.
+- `/userinfo` — consultar informações de um membro.
+- `/serverinfo` — consultar informações do servidor.
+- `/avatar` — visualizar avatar.
+- `/membercount` — consultar quantidade de membros.
+- `/modstats` — consultar estatísticas de moderação.
+- `/case` — consultar registro de uma punição.
+- `/history` — consultar histórico de moderação.
+- `/unwarn` — remover uma advertência específica.
+- `/reason` — atualizar a justificativa de uma punição registrada, preservando o histórico da alteração.
+
+Se necessário, crie comandos adicionais que realmente agreguem valor à moderação.
+
+Toda punição deverá ter um registro persistente com ID, autor da ação, alvo, motivo, horário e duração, quando aplicável.
+
+Não permita que o bot execute punições contra membros que estejam acima ou no mesmo nível hierárquico do executor, nem contra o proprietário do servidor, quando a operação não for permitida.
+
+## 7. PAINEL DE LOGS — /logs
+
+Crie o comando `/logs`.
+
+Ao executar, o bot deverá apresentar uma interface simples para selecionar o canal de logs. Depois da seleção e da confirmação, o canal ficará configurado e o bot começará a enviar os eventos disponíveis.
+
+Inclua categorias de logs configuráveis:
+
+**Moderação**
+- Banimentos e desbanimentos.
+- Expulsões.
+- Timeouts aplicados, alterados e removidos.
+- Advertências.
+- Alterações de cargos feitas pelo bot.
+- Exclusão de mensagens por moderação.
+- Bloqueios e desbloqueios.
+- Alterações de apelidos.
+- Ações administrativas realizadas pelos comandos do bot.
+
+**Mensagens**
+- Mensagens editadas.
+- Mensagens excluídas.
+- Exclusões em massa.
+- Links e convites detectados.
+- Incidentes de spam.
+- Mensagens removidas automaticamente.
+
+**Membros**
+- Entrada de membros.
+- Saída de membros.
+- Atualizações de perfil que os eventos do Discord permitirem detectar.
+- Alterações de cargos.
+- Eventos suspeitos de entrada em massa.
+
+**Canais e estrutura**
+- Criação, exclusão e alterações de canais.
+- Criação, exclusão e alterações de cargos.
+- Alterações em permissões.
+- Criação e exclusão de categorias.
+- Alterações de nome e configurações do servidor, quando disponíveis.
+
+**Tickets**
+- Abertura e fechamento.
+- Assunção e transferência.
+- Renomeação.
+- Marcações da Staff.
+- Inclusão ou remoção de participantes.
+- Envio de DMs.
+- Transcrições e avaliações.
+
+**Bot e configurações**
+- Alterações de configurações.
+- Ativação e desativação das proteções.
+- Mudanças no painel.
+- Erros de comandos.
+- Falhas de permissões.
+- Tentativas de executar comandos sem autorização.
+- Falhas de envio de mensagens e DMs.
+
+Cada log deverá conter, sempre que disponível:
+- Tipo da ação.
+- Autor responsável.
+- Usuário afetado.
+- Canal ou recurso afetado.
+- Data e horário.
+- Motivo.
+- Identificador do evento ou da ação.
+- Resultado da operação.
+- Detalhes relevantes e diferenças entre valores anteriores e novos.
+
+Utilize embeds organizadas, com cores por categoria e informações fáceis de ler.
+
+**Requisito importante:** registre todas as ações que o bot consegue observar ou executar, sem prometer acesso a eventos que o Discord não disponibiliza. Para ações feitas por outros moderadores, utilize eventos, registros de auditoria e permissões disponíveis. Identifique o autor como desconhecido quando não for possível determinar com segurança.
+
+Configure os intents e permissões necessários, respeitando os requisitos do Discord. Para registrar conteúdo de mensagens, configure corretamente o intent privilegiado `Message Content Intent`, quando necessário.
+
+## 8. COMANDO /ENVIARDM
+
+Crie o comando `/enviardm` para enviar mensagens personalizadas por mensagem direta.
+
+O comando deverá apresentar opções para:
+
+- Selecionar o público de destino.
+- Escrever o título e o texto da mensagem.
+- Escolher se a mensagem será uma embed profissional ou texto simples.
+- Anexar uma imagem ou banner.
+- Configurar cor, rodapé e imagem da embed.
+- Utilizar variáveis como `{usuario}` e `{servidor}` quando aplicáveis.
+- Visualizar uma prévia antes do envio.
+- Confirmar ou cancelar a campanha.
+- Consultar estatísticas de entrega e falha.
+
+### Público de destino
+
+Permita:
+- Enviar a membros do servidor atual, conforme as permissões e configurações de privacidade aplicáveis.
+- Selecionar um cargo específico do servidor atual.
+- Enviar a uma lista de destinatários explicitamente autorizada.
+- Selecionar destinatários de uma comunidade que o administrador controla e na qual o bot possui autorização adequada.
+
+Para campanhas envolvendo múltiplos servidores, exija autorização e contexto apropriados. Não use somente um ID de servidor para obter ou contatar membros de comunidades alheias, não tente acessar listas de membros indisponíveis e não contorne a hierarquia de outros servidores.
+
+O bot não deve enviar DMs para cargos administrativos ou membros protegidos por uma política de exclusão configurada, quando esse controle estiver disponível para o público autorizado.
+
+### Segurança e prevenção de abuso
+
+- Exigir uma permissão administrativa específica para iniciar campanhas.
+- Mostrar a quantidade estimada de destinatários.
+- Exigir confirmação explícita antes do envio.
+- Aplicar limites de velocidade e respeitar os rate limits do Discord.
+- Interromper a campanha ao detectar erros repetitivos ou sinais de bloqueio.
+- Pular destinatários que não aceitam DMs.
+- Não tentar contornar bloqueios, limites ou configurações de privacidade.
+- Não armazenar tokens, dados pessoais desnecessários ou conteúdo privado.
+- Registrar quem iniciou a campanha, quando foi executada e quantas mensagens foram enviadas ou falharam.
+
+O comando deverá ser robusto, transparente e adequado para comunicados legítimos, sem mecanismos de spam ou evasão de controles da plataforma.
+
+## 9. COMANDO /MENSAGEM
+
+Crie o comando `/mensagem` para publicar mensagens personalizadas em um canal.
+
+Opções:
+- Selecionar o canal de destino.
+- Definir título.
+- Definir descrição ou texto.
+- Definir cor da embed.
+- Adicionar rodapé.
+- Selecionar imagem ou banner.
+- Escolher entre embed bonita e mensagem simples.
+- Adicionar um link, quando desejado.
+- Visualizar uma prévia.
+- Confirmar o envio.
+- Cancelar antes da publicação.
+
+Inclua também suporte a mensagens com botões de link, quando configurados corretamente, e um controle para impedir menções acidentais a `@everyone` e `@here`.
+
+O comando deverá funcionar com os recursos nativos do Discord e não poderá permitir que usuários sem autorização publiquem mensagens usando a identidade do bot.
+
+## 10. PADRÃO VISUAL
+
+Todas as embeds, painéis, menus e respostas deverão seguir uma identidade visual profissional e consistente.
+
+Diretrizes:
+- Aparência moderna e limpa.
+- Emojis exclusivos e coerentes para cada função.
+- Títulos claros.
+- Cores distintas para sucesso, alerta, erro, moderação e informações.
+- Banners opcionais nas embeds compatíveis.
+- Botões organizados por finalidade.
+- Mensagens de erro úteis e compreensíveis.
+- Pré-visualização de mensagens antes de publicações importantes.
+
+Todos os botões devem executar ações reais. Botões restritos deverão validar novamente as permissões no momento do clique, mesmo que tenham sido exibidos apenas a atendentes.
+
+## 11. PERMISSÕES E SEGURANÇA
+
+Implemente uma camada central de autorização.
+
+Regras:
+- Verificar permissões do Discord.
+- Verificar a hierarquia de cargos.
+- Verificar as permissões do próprio bot.
+- Impedir que membros comuns alterem configurações administrativas.
+- Validar os dados de todos os modais e comandos.
+- Impedir execução duplicada de ações sensíveis.
+- Evitar injeção de conteúdo em consultas ao banco de dados.
+- Limitar tentativas abusivas.
+- Registrar ações administrativas.
+- Não aceitar IDs arbitrários como prova de autorização.
+- Separar configurações de cada servidor.
+- Tratar erros de interação e tokens de interação expirados.
+- Nunca executar operações destrutivas sem as verificações apropriadas.
+
+## 12. BANCO DE DADOS
+
+Crie tabelas ou estruturas persistentes para:
+- Configurações por servidor.
+- Configurações anti-raid, anti-spam e anti-invite.
+- Tickets e responsáveis.
+- Histórico de tickets.
+- Advertências e punições.
+- Configuração dos canais de logs.
+- Histórico de ações.
+- Campanhas de mensagens e estatísticas.
+- Cargos de atendimento.
+- Lista de exceções.
+- Configurações de comandos e permissões.
+
+As configurações devem sobreviver a reinicializações. Não use apenas arrays ou objetos em memória para armazenar dados que não podem ser perdidos.
+
+## 13. ENTREGA FINAL NO REPLIT
+
+Entregue o projeto com:
+- Código-fonte completo.
+- Arquivo `package.json`.
+- Arquivo `.env.example`.
+- Arquivo README com instruções em português.
+- Instruções para criar o aplicativo no Discord Developer Portal.
+- Lista de intents e permissões necessários.
+- Procedimento para convidar o bot ao servidor.
+- Instruções para registrar os comandos slash.
+- Configuração do banco de dados.
+- Orientações para executar e manter o bot ativo no ambiente Replit.
+- Tratamento de erros e logs internos.
+- Testes das principais funcionalidades.
+- Lista de limitações conhecidas da API do Discord.
+
+Não exponha o token do bot no código nem em logs. Utilize os Secrets do Replit para armazenar credenciais.
+
+## 14. CRITÉRIOS OBRIGATÓRIOS DE CONCLUSÃO
+
+Considere o projeto concluído somente quando:
+
+1. O bot conectar corretamente ao Discord.
+2. Todos os comandos forem registrados e responderem.
+3. Os três sistemas de proteção puderem ser configurados.
+4. O painel de tickets funcionar de ponta a ponta.
+5. Os botões respeitarem as permissões e executarem suas funções.
+6. Os comandos de moderação aplicarem as ações reais.
+7. O sistema de logs registrar os eventos disponíveis.
+8. O comando `/enviardm` oferecer prévia, confirmação e estatísticas.
+9. O comando `/mensagem` publicar textos e embeds com imagens.
+10. As configurações e os registros persistirem após reinicializações.
+11. As falhas de permissões, banco de dados e DMs forem tratadas.
+12. O README permitir que outra pessoa instale e configure o projeto.
+
+Comece analisando os requisitos, depois implemente o projeto completo por módulos. Ao terminar cada módulo, teste sua integração com os demais. Não substitua funcionalidades solicitadas por mensagens fictícias ou botões sem ação. Se uma função depender de permissões, intents privilegiados ou limitações da API do Discord, explique a dependência e implemente a melhor alternativa permitida.
