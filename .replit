@@ -38,3 +38,9 @@ expertMode = true
 [postMerge]
 path = "scripts/post-merge.sh"
 timeoutMs = 20000
+
+[userenv]
+
+[userenv.shared]
+DISCORD_ENABLE_GUILD_MEMBERS_INTENT = "true"
+DISCORD_ENABLE_MESSAGE_CONTENT_INTENT = "true"
