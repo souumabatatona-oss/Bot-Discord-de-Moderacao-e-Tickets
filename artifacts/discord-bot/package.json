@@ -1,0 +1,15 @@
+{
+  "name": "@workspace/discord-bot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node src/index.js",
+    "start": "node src/index.js",
+    "test": "node --test",
+    "check": "node --check src/index.js && node --check src/commands.js && node --check src/database.js && node --check src/auth.js && node --check src/security.js && node --check src/tickets.js && node --check src/moderation.js && node --check test/core.test.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.27.0"
+  }
+}

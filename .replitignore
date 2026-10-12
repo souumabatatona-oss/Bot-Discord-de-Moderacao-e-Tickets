@@ -3,3 +3,6 @@
 
 # No need to store the pnpm store twice.
 .local
+
+# Runtime database files stay out of deployment bundles.
+artifacts/discord-bot/data/
